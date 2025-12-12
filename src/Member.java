@@ -44,13 +44,11 @@ public class Member {
         this.isDone = true;
         
         for (Order order : orders) {
-            // Charge credit card
             System.out.println("\n[CHARGING CREDIT CARD]");
             System.out.println("Card Number: " + order.getCard());
             System.out.println("Amount: $50.00");
             System.out.println("Status: SUCCESS");
             
-            // Send email to customer
             System.out.println("\n[SENDING EMAIL]");
             System.out.println("To: " + order.getEmail());
             System.out.println("Subject: Your Valentine's Day Song Has Been Delivered!");
@@ -63,7 +61,6 @@ public class Member {
             order.markCompleted();
         }
         
-        System.out.println("\n================================");
         System.out.println("All customers charged and notified!");
     }
 	

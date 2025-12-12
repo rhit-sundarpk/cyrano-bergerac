@@ -80,6 +80,7 @@ public class OrderSystem {
 	      
 	     while (choice < 1 || choice > 7) {
 	    	 System.out.println("Invalid choice!");
+	    	 System.out.print("Your choice (Just the number): ");
 	         choice = sc.nextInt();
 	         sc.nextLine();
 	            
