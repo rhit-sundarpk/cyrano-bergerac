@@ -1,8 +1,9 @@
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 public class OrderSystem {
-	private HashMap<String, Member> memberMap = new HashMap<String, Member>();
+	private HashMap<String, Member> memberSongMap = new HashMap<String, Member>();
 	private HashMap<Integer, Member> idMap = new HashMap<Integer, Member>();
 	private static Scanner sc = new Scanner(System.in);
 	private ArrayList<String> songList = new ArrayList<String>();
@@ -20,13 +21,13 @@ public class OrderSystem {
         Member m6 = new Member(6, "A Thousand Years");
         Member m7 = new Member(7, "Make You Feel My Love");
         
-        memberMap.put(m1.getSong(), m1);
-        memberMap.put(m2.getSong(), m2);
-        memberMap.put(m3.getSong(), m3);
-        memberMap.put(m4.getSong(), m4);
-        memberMap.put(m5.getSong(), m5);
-        memberMap.put(m6.getSong(), m6);
-        memberMap.put(m7.getSong(), m7);
+        memberSongMap.put(m1.getSong(), m1);
+        memberSongMap.put(m2.getSong(), m2);
+        memberSongMap.put(m3.getSong(), m3);
+        memberSongMap.put(m4.getSong(), m4);
+        memberSongMap.put(m5.getSong(), m5);
+        memberSongMap.put(m6.getSong(), m6);
+        memberSongMap.put(m7.getSong(), m7);
         
         idMap.put(1, m1);
         idMap.put(2, m2);
@@ -45,11 +46,11 @@ public class OrderSystem {
         songList.add("Make You Feel My Love");
     }
 	
-	public void makeOrder(String email, String sweetheart, String song, String creditcard) {
-		Member singer = memberMap.get(song);
+	public void makeOrder(String email, String sweetheart, String song, long creditcard) {
+		Member singer = memberSongMap.get(song);
 		Order newOrder = new Order(email, sweetheart, song, creditcard);
 		singer.assignOrder(newOrder);
-		System.out.println("Order has been made");
+		System.out.println("Order has been made!"+"\n");
 	}
 	
 	
@@ -65,7 +66,10 @@ public class OrderSystem {
 	public void orderUI() {
 		System.out.println("Thanks for using our ordering system! Please enter your email!");
 		String email = sc.nextLine();
-		
+		while(!email.contains("@")) {
+			System.out.println("Please enter a valid email with an @!");
+			email = sc.nextLine();
+		}
 		System.out.println("Who is the recipient?");
 		String sweetheart = sc.nextLine();
 		
@@ -74,24 +78,51 @@ public class OrderSystem {
             System.out.println((i + 1) + " - \"" + song + "\"" );
         }
 		
-		 System.out.print("Your choice (Just the number): ");
-	     int choice = sc.nextInt();
-	     sc.nextLine();
+		 int choice =0;
+		 while(choice < 1 || choice > 7) {
+		 try {
+			 System.out.println("Your choice (Just the number): ");
+			 choice = sc.nextInt();
+		     sc.nextLine();
+		     if(choice < 1 || choice > 7) {
+		    	 System.out.println("Number has to be a valid choice from the list!");
+		     }
+		 }
+		 catch (InputMismatchException error) {
+			 choice =0;
+			 sc.nextLine();
+			 System.out.println("Invalid input!");
+			 
+			 
+		 }
+		 
+		 }
+	     
 	      
-	     while (choice < 1 || choice > 7) {
-	    	 System.out.println("Invalid choice!");
-	    	 System.out.print("Your choice (Just the number): ");
-	         choice = sc.nextInt();
-	         sc.nextLine();
-	            
-	     }
+	     
 	        
 	     String selectedSong = songList.get(choice - 1);
 	        
 		
-	     System.out.println("Finally, please enter the number of the credit card you want to use for this purchase");
-	     String creditcard = sc.nextLine();
+	     System.out.println("Finally, please enter a 16 digit number of the credit card you want to use for this purchase");
+	     long creditcard = 0;
 		
+		 while((Long.toString(creditcard)).length()!=16) {
+			 try {
+				 System.out.println("Your credit card number: ");
+				 creditcard = sc.nextLong();
+			     sc.nextLine();
+			     
+			     if((Long.toString(creditcard)).length()!=16) {
+			    	 System.out.println("Card number has to be 16 digits long");
+			     }
+			 }
+			 catch (InputMismatchException error) {
+				 System.out.println("Please enter a valid 16 digit credit card number!");
+				 sc.nextLine();
+				 
+			 }
+			 }
 		
 		this.makeOrder(email, sweetheart, selectedSong, creditcard);
 	}

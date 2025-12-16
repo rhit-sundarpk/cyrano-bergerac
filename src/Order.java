@@ -2,12 +2,12 @@
 public class Order {
 	private String email;
 	private String sweetheart;
-	private String creditcard;
+	private long creditcard;
 	private String song;
 	private boolean completed;
 	
 	
-	public Order(String email, String sweetheart, String song, String creditcard) {
+	public Order(String email, String sweetheart, String song, long creditcard) {
 		this.email= email;
 		this.creditcard = creditcard;
 		this.sweetheart = sweetheart;
@@ -25,7 +25,7 @@ public class Order {
 		return this.email;
 	}
 	
-	public String getCard() {
+	public long getCard() {
 		return this.creditcard;
 	}
 	
